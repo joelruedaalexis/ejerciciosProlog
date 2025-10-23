@@ -1,0 +1,123 @@
+<div class="notebook">
+
+<div class="nb-cell markdown" name="md1">
+### 07 - Conjuntos de actividades
+Dado el siguiente listado de actividades extracurriculares que realiza cada estudiante
+</div>
+
+<div class="nb-cell program" data-background="true" name="p1">
+natacion(a).
+natacion(b).
+natacion(c).
+natacion(d).
+
+futbol(a).
+futbol(b).
+futbol(e).
+futbol(f).
+
+teatro(a).
+teatro(c).
+teatro(e).
+teatro(g).
+</div>
+
+<div class="nb-cell markdown" name="md2">
+Se desea saber:
+
+1)Qué estudiantes participan de todas las actividades
+
+2)Qué estudiantes realizan futbol y no teatro
+
+3)Qué estudiantes realizan al menos alguna actividad. Evitar duplicados
+
+4)Qué estudiantes participan de al menos dos actividades
+
+5)Teniendo un listado de estudiantes total estudiantes/1 comprendido entre [a, j], qué estudiantes no realizan ninguna actividad
+</div>
+
+<div class="nb-cell program" data-background="true" name="p2">
+%1) Qué estudiantes participan de todas las actividades
+todasLasActividades(X):- %{a}
+    natacion(X),
+    futbol(X),
+    teatro(X).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q1">
+todasLasActividades(X)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p3">
+%2)Qué estudiantes realizan futbol y no teatro
+futbolNoTeatro(X):- %{b,f}
+    futbol(X),
+    \+teatro(X).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q2">
+futbolNoTeatro(X)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p4">
+%3)Qué estudiantes realizan al menos alguna actividad. Evitar duplicados
+alMenosUnaActividad(X):-
+    futbol(X);
+    (   natacion(X),
+        \+teatro(X),
+        \+futbol(X)
+        );
+    (   teatro(X),
+        \+futbol(X)
+        ).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q3">
+alMenosUnaActividad(X)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p5">
+%4)Qué estudiantes participan de al menos dos actividades
+alMenosDosActividades(X):-
+    (   futbol(X),
+        natacion(X)
+    );
+    (   natacion(X),
+        teatro(X),
+        \+futbol(X)
+    );
+    (   teatro(X),
+        \+natacion(X),
+        futbol(X)
+    ).
+
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q4">
+alMenosDosActividades(X)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p6">
+%5)Teniendo un listado de estudiantes total estudiantes/1 comprendido entre [a, j], 
+%	qué estudiantes no realizan ninguna actividad
+estudiante(a).
+estudiante(b).
+estudiante(c).
+estudiante(d).
+estudiante(e).
+estudiante(f).
+estudiante(g).
+estudiante(h).
+estudiante(i).
+estudiante(j).
+
+sinActividad(X):-
+    estudiante(X),
+    \+alMenosUnaActividad(X).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q5">
+sinActividad(X)
+</div>
+
+</div>
