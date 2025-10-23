@@ -1,0 +1,99 @@
+<div class="notebook">
+
+<div class="nb-cell markdown" name="md1">
+## 05 - Agencia matrimonial
+Una agencia matrimonial de los años '80 tiene un fichero de candidatos al matrimonio organizado según las declaraciones siguientes:
+
+hombre(N,A,C,E).
+
+mujer(N,A,C,E).
+
+Donde N es el nombre de un hombre o una mujer, A su altura (alta, media, baja), C el color de su cabello (rubio, castaño, pelirrojo, negro) y E su edad (joven,adulta,vieja).
+
+gusta(N,M,L,S).
+
+Que indica que a la persona N le gusta el género de música M (clásica, pop, jazz), el género de literatura L (aventura, ciencia-ficción, policíaca), y practica el deporte S (tenis, natación, jogging).
+
+busca(N,A,C,E).
+
+Que expresa que la persona N busca una pareja de altura A, con cabello color C y edad E.
+
+Se considera que dos personas X e Y de sexos diferentes son adecuadas si X conviene a Y e Y conviene a X. Se dice que X conviene a Y si X conviene físicamente a Y (la altura, edad y color de cabello de y son los que busca x) y si, además, los gustos de X e Y en música, literatura y deporte coinciden
+</div>
+
+<div class="nb-cell program" data-background="true" name="p1">
+%hombre(N,A,C,E)
+hombre(alejandro,alta,castaño,adulta).
+hombre(brian,alta,castaño,adulta).
+hombre(carlos,alta,castaño,vieja).
+hombre(david,baja,pelirrojo,joven).
+hombre(edward,media,negro,adulta).
+%mujer(N,A,C,E)
+mujer(ana,media,negro,joven).
+mujer(beatriz,alta,castaño,joven).
+mujer(celeste,media,castaño,adulta).
+mujer(diana,alta,negro,joven).
+mujer(eva,media,castaño,adulta).
+</div>
+
+<div class="nb-cell program" data-background="true" name="p2">
+%gusta(N,M,L,S)
+gusta(alejandro,clásica,aventura,tenis).
+gusta(brian,pop,aventura,tenis).
+gusta(carlos,jazz,policíaca,natación).
+gusta(david,clásica,policíaca,jogging).
+gusta(edward,pop,policíaca,natación).
+%mujeres
+gusta(ana,clásica,aventura,tenis).
+gusta(beatriz,jazz,policíaca,tenis).
+gusta(celeste,jazz,policíaca,natación).
+gusta(diana,pop,policíaca,natación).
+gusta(eva,jazz,aventura,jogging).
+%busca(N,A,C,E).
+busca(alejandro,media,negro,joven). %ana NO
+busca(brian,baja,negro,joven). %ninguna NO
+busca(carlos,media,castaño,adulta). %celeste eva -SI NO
+busca(david,alta,negro,joven). %diana NO
+busca(edward,alta,negro,joven).%diana SI
+%mujeres
+busca(ana,alta,castaño,adulta). %alejandro BRIAN -SI NO
+busca(beatriz,baja,pelirrojo,joven). %david NO
+busca(celeste,alta,castaño,vieja). %carlos SI
+busca(diana,media,negro,adulta). %edward SI
+</div>
+
+<div class="nb-cell program" data-background="true" name="p3">
+hombreConvieneMujer(X,Y):-
+    hombre(X,_,_,_),
+    busca(X,A,C,E),
+    mujer(Y,A,C,E).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q1">
+hombreConvieneMujer(X,Y)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p4">
+mujerConvieneHombre(X,Y):-
+    mujer(X,_,_,_),
+    busca(X,A,C,E),
+    hombre(Y,A,C,E).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q2">
+mujerConvieneHombre(X,Y)
+</div>
+
+<div class="nb-cell program" name="p5">
+match(X,Y):-
+    hombreConvieneMujer(X,Y),
+    mujerConvieneHombre(Y,X),
+    gusta(X,M,L,S),
+    gusta(Y,M,L,S).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q3">
+match(X,Y)
+</div>
+
+</div>

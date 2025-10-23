@@ -1,0 +1,65 @@
+<div class="notebook">
+
+<div class="nb-cell html" name="htm1">
+<h3>02 - Árbol genealógico</h3>
+</div>
+
+<div class="nb-cell markdown" name="md1">
+El árbol genealógico siguiente se describe con el programa Prolog:
+</div>
+
+<div class="nb-cell program" data-background="true" name="p1">
+hombre(pedro).
+hombre(manuel).
+hombre(arturo).
+mujer(maría).
+padre(pedro, manuel).
+padre(pedro, arturo).
+padre(pedro, maría).
+</div>
+
+<div class="nb-cell html" name="htm2">
+A partir de estas afirmaciones, formular las reglas generales de:
+<br><br>
+niño(X,Y) % expresa que X es hijo o hija de Y.<br>
+hijo(X,Y) % expresa que X es un hijo varón de Y.<br>
+hija(x,y) % expresa que X es una hija de Y.<br>
+hermano-o-hermana(X,Y) % expresa que X es hermano o hermana de Y.<br>
+hermano(X,Y) % expresa que X es un hermano de Y.<br>
+hermana(X,Y) % expresa que X es una hermana de Y.<br>
+</div>
+
+<div class="nb-cell program" data-background="true" name="p2">
+niño(X,Y):-padre(Y,X).
+hijo(X,Y):-niño(X,Y),hombre(X).
+hija(X,Y):-niño(X,Y),mujer(X).
+hermano_o_hermana(X,Y):-niño(X,Z),niño(Y,Z),X\==Y.
+hermano(X,Y):-hijo(X,Z),niño(Y,Z),X\==Y.
+hermana(X,Y):-hija(X,Z),niño(Y,Z),X\==Y.
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q1">
+niño(X,Y)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q2">
+hijo(X,Y)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q3">
+hija(X,Y)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q4">
+hermano_o_hermana(X,Y)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q5">
+hermano(X,Y)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q6">
+hermana(X,Y)
+</div>
+
+</div>

@@ -1,0 +1,93 @@
+<div class="notebook">
+
+<div class="nb-cell html" name="htm1">
+<h3>01 - Menú de restaurant</h3> 
+La siguiente base de conocimiento corresponde al programa "menú" de un restaurante. El restaurante ofrece menús completos compuestos por una entrada, un plato principal y un postre. El plato principal puede ser carne o pescado.
+</div>
+
+<div class="nb-cell program" data-background="true" name="p1">
+entrada(paella).
+entrada(gazpacho).
+entrada(consomé).
+
+carne('filete de cerdo').
+carne('pollo asado').
+
+pescado(trucha).
+pescado(bacalao).
+
+postre(flan).
+postre(helado).
+postre(pastel).
+</div>
+
+<div class="nb-cell html" name="htm2">
+Implementar las reglas necesarias para formular las siguientes consultas en Prolog:<br>
+
+1) ¿Cuáles son los menús que ofrece el restaurante? (menu/3) <br>
+2) ¿Cuáles son los menús que tienen consomé en las entradas? (menu_con_consomé/3). ¿Sería mejor esta regla con 2 parámetros?<br>
+3) ¿Cuáles son los menús que no contienen flan como postre? (menu_sin_flan/3)<br>
+4) ¿Cuáles son los menús que tienen carne como plato principal? (menu_con_carne/3)<br>
+5) Completar el programa "menú" de manera que una comida esté formada también por la elección de una bebida, a elegir entre vino, cerveza o agua mineral. (menu/4)<br>
+</div>
+
+<div class="nb-cell program" data-background="true" name="p2">
+%Ejercicio 1: ¿Cuáles son los menús que ofrece el restaurante? (menu/3)
+platoPrincipal(PlatoPrincipal):-carne(PlatoPrincipal);pescado(PlatoPrincipal).
+menu(Entrada,PlatoPrincipal,Postre):- entrada(Entrada),platoPrincipal(PlatoPrincipal),postre(Postre).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q1">
+menu(Entrada,PlatoPrincipal,Postre)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p3">
+%Ejercicio 2: ¿Cuáles son los menús que tienen consomé en las entradas? (menu_con_consomé/3).¿Sería mejor esta regla con 2 parámetros?
+menu_con_consomé(Entrada,PlatoPrincipal,Postre):-Entrada='consomé',menu(Entrada,PlatoPrincipal,Postre).
+menu_con_consomé(PlatoPrincipal,Postre):-menu_con_consomé('consomé',PlatoPrincipal,Postre).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q2">
+menu_con_consomé(Entrada,PlatoPrincipal,Postre)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q7">
+menu_con_consomé(asd,PlatoPrincipal,Postre)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q3">
+menu_con_consomé(PlatoPrincipal,Postre)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p4">
+%Ejercicio 3: ¿Cuáles son los menús que no contienen flan como postre? (menu_sin_flan/3)
+menu_sin_flan(Entrada,PlatoPrincipal,Postre):-menu(Entrada,PlatoPrincipal,Postre),Postre\=='flan'.
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q4">
+menu_sin_flan(Entrada,PlatoPrincipal,Postre)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p5">
+%Ejercicio 4: ¿Cuáles son los menús que tienen carne como plato principal? (menu_con_carne/3)
+menu_con_carne(Entrada,PlatoPrincipal,Postre):-entrada(Entrada),carne(PlatoPrincipal),postre(Postre).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q5">
+menu_con_carne(Entrada,PlatoPrincipal,Postre)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p6">
+%Ejercicio 5: Completar el programa "menú" de manera que una comida esté formada también por la elección de una bebida, 
+%				a elegir entre vino, cerveza o agua mineral. (menu/4)
+bebida('vino').
+bebida('cerveza').
+bebida('agua mineral').
+menu(Entrada,PlatoPrincipal,Postre,Bebida):-menu(Entrada,PlatoPrincipal,Postre),bebida(Bebida).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q6">
+menu(Entrada,PlatoPrincipal,Postre,Bebida)
+</div>
+
+</div>
