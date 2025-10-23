@@ -1,0 +1,58 @@
+<div class="notebook">
+
+<div class="nb-cell markdown" name="md1">
+### 09 - Mínimas calorias
+Modificar el programa del ejercicio 01 - Menú de restaurant para poder consultar cual es el menú completo que tiene menor cantidad de calorías (agregando las calorias como parte de la información de los hechos). Se recomienda primero hacer un menu/4 donde incluya las calorias totales.
+
+
+Hallar el menú completo que tiene la menor cantidad de calorias, sin contar al menor de todos (hallar el segundo mínimo)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p1">
+entrada(paella,490).
+entrada(gazpacho,400).
+entrada(consomé,350).
+
+carne('filete de cerdo',260).
+carne('pollo asado',300).
+
+pescado(trucha,200).
+pescado(bacalao,192).
+
+postre(flan,150).
+postre(helado,260).
+postre(pastel,300).
+</div>
+
+<div class="nb-cell program" data-background="true" name="p2">
+platoPrincipal(X,C):-carne(X,C);pescado(X,C).
+menu(E,PP,P,C):-entrada(E,C1),platoPrincipal(PP,C2),postre(P,C3),C is C1+C2+C3.
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q2">
+platoPrincipal(X,C)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q1">
+menu(Entrada,PlatoPrincipal,Postre,Calorias)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p3">
+todosMenosMenor(X):-menu(_,_,_,X),menu(_,_,_,Y),X&gt;Y.
+menorCaloria(E,PP,P,C):-menu(E,PP,P,C),\+todosMenosMenor(C).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q3">
+menorCaloria(E,PP,P,C)
+</div>
+
+<div class="nb-cell program" data-background="true" name="p4">
+todosMenosSegundoMenor(X):-todosMenosMenor(X),todosMenosMenor(Y),X&gt;Y.
+segundaMenorCaloria(E,PP,P,C):-menu(E,PP,P,C),todosMenosMenor(C),\+todosMenosSegundoMenor(C).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q4">
+segundaMenorCaloria(E,PP,P,C)
+</div>
+
+</div>
