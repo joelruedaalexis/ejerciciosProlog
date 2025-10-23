@@ -1,0 +1,73 @@
+<div class="notebook">
+
+<div class="nb-cell markdown" name="md1">
+### 08 - Reuniones empresariales
+
+Dada una base de conocimientos de disponibilidad de horarios (bloques de 1 hora) para reuniones
+</div>
+
+<div class="nb-cell program" data-background="true" name="p1">
+disponibilidad_equipo(marketing, 9).
+disponibilidad_equipo(marketing, 10).
+disponibilidad_equipo(desarrollo, 10).
+disponibilidad_equipo(desarrollo, 11).
+disponibilidad_equipo(ventas, 9).
+disponibilidad_equipo(ventas, 11).
+
+disponibilidad_cliente(google, 9).
+disponibilidad_cliente(google, 10).
+disponibilidad_cliente(google, 11).
+disponibilidad_cliente(apple, 10).
+disponibilidad_cliente(apple, 11).
+disponibilidad_cliente(microsoft, 9).
+disponibilidad_cliente(microsoft, 11).
+</div>
+
+<div class="nb-cell html" name="htm1">
+1)Se desea saber la disponibilidad para formar una reunión entre nuestros equipos y los clientes. Se debe crear la regla disponibilidad_reunion/3 que determine las reuniones posibles de cada uno de nuestros equipos con cada uno de nuestros clientes en cada horario posible. Para el caso planteado, la salida la siguiente
+<br>
+Equipo	Cliente	Hora <br>
+marketing	google	9<br>
+marketing	microsoft	9<br>
+marketing	google	10<br>
+marketing	apple	10<br>
+desarrollo	google	10<br>
+desarrollo	apple	10<br>
+</div>
+
+<div class="nb-cell program" data-background="true" name="p2">
+reunion(Equipo,Cliente,Hora):-
+    disponibilidad_equipo(Equipo,Hora),
+    disponibilidad_cliente(Cliente,Hora).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q1">
+reunion(Equipo,Cliente,Hora)
+</div>
+
+<div class="nb-cell markdown" name="md2">
+Se agrega la posibilidad de reservar un horario de reunión para un equipo y un cliente en un horario en especifico, con el hecho reunion_pactada/3. Se pide crear una nueva regla disponibilidad_reunion_final/3 donde se tenga en cuenta las reuniones ya pactadas y se excluyan de las reuniones disponibles, pero ojo, si por ejemplo una de las reuniones pactadas es de ventas con google a las 11, el equipo de ventas no estará disponible a las 11, pero tampoco lo estará el equipo de google (ya que se considera solo 1 disponibilidad por equipo y cliente por horario)
+
+Ejemplo: Para las siguientes reuniones pactadas
+
+reunion_pactada(ventas, google, 11).
+reunion_pactada(marketing, apple, 10).
+</div>
+
+<div class="nb-cell program" data-background="true" name="p3">
+reunion_pactada(ventas, google, 11).
+reunion_pactada(marketing, apple, 10).
+reunion_pactada(marketing,microsoft,9).
+reunion_pactada(desarrollo,google,10).
+
+disponibilidad_reunion_final(Equipo,Cliente,Hora):-
+    reunion(Equipo,Cliente,Hora),
+    \+reunion_pactada(Equipo,_,Hora),
+	\+reunion_pactada(_,Cliente,Hora).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q2">
+disponibilidad_reunion_final(Equipo,Cliente,Hora)
+</div>
+
+</div>
