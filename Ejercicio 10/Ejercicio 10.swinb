@@ -1,0 +1,86 @@
+<div class="notebook">
+
+<div class="nb-cell markdown" name="md1">
+### 10 - Vendedores
+Dado el listado de vendedores y ventas semestrales se desea obtener el listado anual de comisiones. Las comisiones se liquidan de la siguiente manera:
+
+20% del total vendido en el año para aquellos vendedores que hayan tenido ventas en ambos semestres y cada una de ellas supera los $ 20000.
+
+10% del total vendido en el año para aquellos vendedores que hayan tenido ventas en ambos semestres, pero no superan los $ 20000 en alguno de estos.
+
+5% del total vendido para los vendedores que no registran ventas en algún semestre
+
+Se dispone de los siguientes datos:
+</div>
+
+<div class="nb-cell program" data-background="true" name="p2">
+ventas1erSem(ana,42600).
+ventas1erSem(brian,23600).
+%ventas1erSem(carla,1645).
+ventas1erSem(david,94658).
+ventas1erSem(eduardo,25234).
+ventas1erSem(fabiana,18768).
+%ventas1erSem(gabriel,624).
+
+ventas2doSem(ana,39744).
+%ventas2doSem(brian,2600).
+ventas2doSem(carla,1922).
+%ventas2doSem(david,9658).
+ventas2doSem(eduardo,18235).
+ventas2doSem(fabiana,39765).
+ventas2doSem(gabriel,14689).
+</div>
+
+<div class="nb-cell program" data-background="true" name="p1">
+veintePorCiento(Vendedor,Importe):-
+    ventas1erSem(Vendedor,X),
+    ventas2doSem(Vendedor,Y),
+    (   X&gt;20000,
+    	Y&gt;20000
+    ),
+    Importe is (X+Y)*0.2.
+
+diezPorCiento(Vendedor,Importe):-
+    ventas1erSem(Vendedor,X),
+    ventas2doSem(Vendedor,Y),
+    (  
+    	(   X =&lt; 20000,
+        	Y &gt; 20000
+        );
+    	(   X &gt; 20000,
+    		Y =&lt; 20000
+        )
+    ),
+    Importe is X+Y.
+cincoPorCiento(Vendedor,Importe):-
+    (   (   ventas1erSem(Vendedor,X),
+            \+ventas2doSem(Vendedor,_)
+        );
+        (   ventas2doSem(Vendedor,X),
+            \+ventas1erSem(Vendedor,_)
+        )
+    ),
+    Importe is X*0.05.
+comision(Vendedor, Importe):-
+    veintePorCiento(Vendedor,Importe);
+    diezPorCiento(Vendedor,Importe);
+    cincoPorCiento(Vendedor,Importe).
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q2">
+veintePorCiento(Vendedor,Importe)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q3">
+diezPorCiento(Vendedor,Importe)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q4">
+cincoPorCiento(Vendedor,Importe)
+</div>
+
+<div class="nb-cell query" data-tabled="true" name="q1">
+comision(Vendedor,Importe)
+</div>
+
+</div>
